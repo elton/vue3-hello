@@ -1,124 +1,100 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
+import ChildComp from './components/ChildComp.vue';
+import Section2 from './components/Section2.vue';
+import Section3 from './components/Section3.vue';
+import Section4 from './components/Section4.vue';
+import Section5 from './components/Section5.vue';
+import Section6 from './components/Section6.vue';
+import Section7 from './components/Section7.vue';
+import Section9 from './components/Section9.vue';
+import Section10 from './components/Section10.vue';
+import Section from './components/Section.vue';
 
-// reactive() only works on objects (including arrays and built-in types like Map and Set).
-// State that can trigger updates when changed are considered reactive.
-// When the state changes, the HTML updates automatically.
-const counter = reactive({
-  count: 1,
-});
-
-// console.log(counter.count);
-// counter.count++;
-
-// ref(), on the other hand, can take any value type and create an object that exposes the inner value under a .value property
-const message = ref('Hello, world!');
-
-// console.log(message.value);
-// message.value = 'changed';
-
-const titleClass = ref('title');
-
-const count = ref(0);
-const increment = () => count.value++;
-
-const text = ref('');
-
-const awesome = ref(true);
-const toggle = () => {
-  awesome.value = !awesome.value;
-};
-
-let id = 0;
-const newTodo = ref('');
-const todos = ref([
-  { id: id++, text: 'Learn Vue', done: false },
-  { id: id++, text: 'Learn React', done: false },
-  { id: id++, text: 'Learn Nuxt', done: false },
+const greeting = ref('Hello from parent');
+const childMsg = ref('No child msg yet');
+const sections = ref([
+  { num: '02', title: 'Declarative Rendering' },
+  { num: '03', title: 'Attribute Bindings' },
+  { num: '04', title: 'Event Listeners' },
+  { num: '05', title: 'Form Bindings' },
+  { num: '06', title: 'Conditional Rendering' },
+  { num: '07-08', title: 'List Rendering & Computed Property' },
+  { num: '09', title: 'Lifecycle and Template Refs' },
+  { num: '10', title: 'Watchers' },
+  { num: '11-14', title: 'Components, Props, Emits and slot' },
 ]);
-
-const addTodo = () => {
-  todos.value.push({
-    id: id++,
-    text: newTodo.value,
-    done: false,
-  });
-  newTodo.value = '';
-};
-
-const removeTodo = (todo) =>
-  (todos.value = todos.value.filter((t) => t.id !== todo.id));
 </script>
 
 <template>
-  <div class="m-4 space-y-2">
-    <h1 class="text-3xl font-bold underline">{{ message }}</h1>
-    <!-- Notice how we did not need to use .value when accessing the message ref in templates: it is automatically unwrapped for more succinct usage. -->
-    <p>count is:{{ counter.count }}</p>
-    <!-- The content inside the mustaches is not limited to just identifiers or paths - we can use any valid JavaScript expression: -->
-    <div>
-      {{ message.split('').reverse().join('') }}
-    </div>
-    <!-- Attribute Bindings, it's a shorthand syntax of v-bind -->
-    <p :class="titleClass">Make me red</p>
-    <!-- Event Listeners. it's a shorthand syntax of v-on -->
-    <button @click="increment" class="rounded bg-sky-600 px-5 text-white">
-      count is: {{ count }}
-    </button>
-    <div class="flex space-x-2">
-      <!-- v-model automatically syncs the <input>'s value with the bound state -->
-      <input
-        v-model="text"
-        placeholder="Type here"
-        type="text"
-        class="rounded border p-1 text-sm"
-      />
-      <p>{{ text.toUpperCase() }}</p>
-    </div>
-
-    <div class="w-1/4 text-center">
-      <p v-if="awesome">Vue is awesome!</p>
-      <p v-else>oh, no. 🤣</p>
-      <button @click="toggle" class="w-24 rounded bg-slate-600 px-1 text-white">
-        toggle
-      </button>
-    </div>
-
-    <div>
-      <input
-        type="text"
-        class="rounded border border-neutral-400 p-1 text-sm"
-        v-model="newTodo"
-        @keyup.enter="addTodo"
-        placeholder="Type new todo"
-      />
-      <button
-        @click="addTodo"
-        class="ml-2 rounded bg-neutral-600 px-2 text-white"
-      >
-        Add todo
-      </button>
-      <ul>
-        <li
-          v-for="todo in todos"
-          :key="todo.id"
-          class="mt-2 flex items-center text-sm text-neutral-600"
-        >
-          <p>{{ todo.text }}</p>
-          <button
-            @click="removeTodo(todo)"
-            class="ml-2 rounded border bg-amber-800 px-2 text-sm text-white"
-          >
-            x
-          </button>
-        </li>
-      </ul>
-    </div>
+  <h1 class="m-4 text-center text-3xl font-semibold text-emerald-800">
+    {{ 'vue3 exercises'.toUpperCase() }}
+  </h1>
+  <p class="m-4 text-center text-neutral-600">
+    Refer to
+    <a
+      href="https://staging-cn.vuejs.org/tutorial"
+      class="text-sky-600 underline"
+      >vue3 official tutorial</a
+    >
+  </p>
+  <div class="m-4 flex flex-col items-center space-y-2">
+    <Section
+      :key="sections[0].num"
+      :num="sections[0].num"
+      :title="sections[0].title"
+      ><Section2
+    /></Section>
+    <Section
+      :key="sections[1].num"
+      :num="sections[1].num"
+      :title="sections[1].title"
+      ><Section3
+    /></Section>
+    <Section
+      :key="sections[2].num"
+      :num="sections[2].num"
+      :title="sections[2].title"
+      ><Section4
+    /></Section>
+    <Section
+      :key="sections[3].num"
+      :num="sections[3].num"
+      :title="sections[3].title"
+      ><Section5
+    /></Section>
+    <Section
+      :key="sections[4].num"
+      :num="sections[4].num"
+      :title="sections[4].title"
+      ><Section6
+    /></Section>
+    <Section
+      :key="sections[5].num"
+      :num="sections[5].num"
+      :title="sections[5].title"
+      ><Section7
+    /></Section>
+    <Section
+      :key="sections[6].num"
+      :num="sections[6].num"
+      :title="sections[6].title"
+      ><Section9
+    /></Section>
+    <Section
+      :key="sections[7].num"
+      :num="sections[7].num"
+      :title="sections[7].title"
+      ><Section10
+    /></Section>
+    <Section
+      :key="sections[8].num"
+      :num="sections[8].num"
+      :title="sections[8].title"
+      ><ChildComp :msg="greeting" @response="(msg) => (childMsg = msg)">
+        This is some slot content.
+      </ChildComp>
+      <p>{{ childMsg }}</p></Section
+    >
   </div>
 </template>
-
-<style>
-.title {
-  color: red;
-}
-</style>
